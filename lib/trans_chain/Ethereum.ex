@@ -2,7 +2,7 @@ defmodule TransChain.Ethereum do
   @moduledoc """
   This module is responsible for manipulating functionality involved for Ethereum blockchain
   """
-   require Logger
+  require Logger
   alias __MODULE__
 
   @type t :: %Ethereum{params: [map()]}
@@ -10,19 +10,25 @@ defmodule TransChain.Ethereum do
   defstruct ~w(params)a
 
   def send_transaction(%__MODULE__{params: params}) do
-    %HTTPoison.Response{body: body, status_code}=url() |> HTTPoison.post!(body(params), headers())
+    url()
+    |> HTTPoison.post!(body(params), headers())
+    |> response()
   end
 
   defp response(%HTTPoison.Response{body: body, status_code: 200}) do
-   case Poison.decode!(body) do
-     %{"result" => %{"tx" => tx}} -> 
-      Logger.info("Transaction status" <> ":" <> "complete successfully")
-      Logger.info("Transaction hash" <> ":" <> "#{tx["hash"]}")
-      Logger.info("Transaction gas" <> ":" <> "#{tx["gas"]}")
+    case Poison.decode!(body) do
+      %{"result" => %{"tx" => tx}} ->
+        Logger.info("Transaction status" <> ":" <> "complete successfully")
+        Logger.info("Transaction hash" <> ":" <> "#{tx["hash"]}")
+        Logger.info("Transaction gas" <> ":" <> "#{tx["gas"]}")
 
-     %{"error" => %{"message" => message}} -> message
-   end
+      %{"error" => %{"message" => message}} ->
+        Logger.error(message)
+    end
+  end
 
+  defp response(_) do
+    Logger.error("Failed to issue transaction, Try Again!!")
   end
 
   defp body(params) do
