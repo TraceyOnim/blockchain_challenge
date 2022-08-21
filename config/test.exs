@@ -8,11 +8,12 @@ config :trans_chain, TransChainWeb.Endpoint,
   server: false
 
 # In test we don't send emails.
-config :trans_chain, TransChain.Mailer,
-  adapter: Swoosh.Adapters.Test
+config :trans_chain, TransChain.Mailer, adapter: Swoosh.Adapters.Test
 
 # Print only warnings and errors during test
 config :logger, level: :warn
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :trans_chain, :http_client, TransChain.HttpClientMock

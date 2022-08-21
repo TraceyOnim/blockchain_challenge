@@ -12,6 +12,10 @@ defimpl TransChain, for: Ethereum do
   def transaction(%Ethereum{method: "eth_getTransactionByHash"} = params) do
     Ethereum.get_transaction(params)
   end
+
+  def transaction(params) do
+    Ethereum.notify(params)
+  end
 end
 
 # defimpl TransChain, for: Ethereum do

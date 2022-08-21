@@ -3,21 +3,28 @@ defmodule TransChain.Ethereum do
   This module is responsible for manipulating functionality involved for Ethereum blockchain
   """
   require Logger
+  alias TransChain.Client
   alias __MODULE__
 
   @type t :: %Ethereum{params: [any()], method: String.t()}
 
+  @http_client Application.get_env(:trans_chain, :http_client, Client)
+
   defstruct ~w(params method)a
 
   def send_transaction(%__MODULE__{params: params, method: method}) do
-    url()
-    |> HTTPoison.post!(body(params, method), headers())
+    params
+    |> @http_client.post!(method)
     |> response()
   end
 
+  def notify(_) do
+    Logger.error("missing param or method")
+  end
+
   def get_transaction(%__MODULE__{params: params, method: method}) do
-    url()
-    |> HTTPoison.post!(body(params, method), headers())
+    params
+    |> @http_client.post!(method)
     |> transaction_info()
   end
 
@@ -28,6 +35,9 @@ defmodule TransChain.Ethereum do
 
       %{"result" => result} ->
         Enum.each(result, fn {k, v} -> IO.puts("#{k}:  #{v}") end)
+
+      %{"error" => error} ->
+        Logger.error(error["message"])
     end
   end
 
@@ -38,34 +48,16 @@ defmodule TransChain.Ethereum do
   defp response(%HTTPoison.Response{body: body, status_code: 200}) do
     case Poison.decode!(body) do
       %{"result" => %{"tx" => tx}} ->
-        Logger.info("complete successfully")
-        Logger.info("Transaction hash" <> ":" <> "#{tx["hash"]}")
-        Logger.info("Transaction gas" <> ":" <> "#{tx["gas"]}")
+        IO.puts("Transaction completed successfully")
+        IO.puts("Transaction hash" <> ":" <> "#{tx["hash"]}")
+        IO.puts("Transaction gas" <> ":" <> "#{tx["gas"]}")
 
-      %{"error" => %{"message" => message}} ->
-        Logger.error(message)
+      %{"error" => error} ->
+        Logger.error(error["message"])
     end
   end
 
   defp response(_) do
     Logger.error("Failed to issue transaction, Try Again!!")
-  end
-
-  defp body(params, method) do
-    %{
-      id: 1,
-      jsonrpc: "2.0",
-      method: method,
-      params: params
-    }
-    |> Poison.encode!()
-  end
-
-  defp headers do
-    [{"content-Type", "application/json"}]
-  end
-
-  defp url do
-    Application.get_env(:trans_chain, :ethereum_url)
   end
 end
