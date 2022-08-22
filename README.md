@@ -105,7 +105,7 @@ The ` TransChain.Client` module entails the function(s) responsible for broadcas
 
 ## Testing in Development Environment
 
-In order to test in development environment, I used (Geth)[https://geth.ethereum.org/docs/getting-start] Ethereum client to turn my computer into Ethereum node. It will connect the computer to the Ethereum network.
+In order to test in development environment, I used [Geth](https://geth.ethereum.org/docs/getting-start) Ethereum client to turn my computer into Ethereum node. It will connect the computer to the Ethereum network.
 
 The following steps were taken:
 1. Install Geth https://geth.ethereum.org/docs/install-and-build/installing-geth
