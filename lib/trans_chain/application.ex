@@ -9,11 +9,9 @@ defmodule TransChain.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      TransChainWeb.Telemetry,
       # Start the PubSub system
-      {Phoenix.PubSub, name: TransChain.PubSub},
+      {Phoenix.PubSub, name: TransChain.PubSub}
       # Start the Endpoint (http/https)
-      TransChainWeb.Endpoint
       # Start a worker by calling: TransChain.Worker.start_link(arg)
       # {TransChain.Worker, arg}
     ]

@@ -89,7 +89,7 @@ When issuing transaction, you will invoke the `transaction/1` it takes in `%Ethe
         }
       ]
 
-TransChain.transaction(%Ethereum{params: params,method: "eth_sendTransaction")
+TransChain.transaction(%Ethereum{params: params,method: "eth_sendTransaction"})
 ```
 
 When fetching transaction, you will also invoke the `transaction/1` it takes in `%Ethereum{}` as its parameter:
