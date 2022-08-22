@@ -188,7 +188,7 @@ In the `TransChain` protocol, I will add the following implementation
 
 ```elixir
 defimpl TransChain, for: Bitcoin do
-  def send_transaction(params), do: Bitcoin.send_transaction()
+  def transaction(params), do: Bitcoin.send_transaction(params)
 end
 
 ```
