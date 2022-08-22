@@ -99,7 +99,7 @@ When fetching transaction, you will also invoke the `transaction/1` it takes in 
 
  TransChain.transaction(%Ethereum{params: params, method: "eth_getTransactionByHash"})
 ```
-For successfull transaction ensure you have passed the required params and method. 
+For successfull transaction ensure required params and method are passed. 
 
 The ` TransChain.Client` module entails the function(s) responsible for broadcasting transaction to a blockchain network.
 
@@ -124,7 +124,7 @@ The following steps were taken:
  ```
  `trans-chain-integration` is a directory where `Geth` should save the `blockchain data`
 
- 4. Fund the account generated in `step 1` using (faucet)[https://fauceth.komputing.org/?chain=1115511]
+ 4. Fund the account generated in `step 1` using [faucet](https://fauceth.komputing.org/?chain=1115511)
  
 
 ### Interacting with Ethereum Blockchain
@@ -193,5 +193,7 @@ end
 
 ```
 
-2. Save failed tranaction. This will come handy at the point refunds needs to be done.
+2.Save failed transaction. This will come handy at the point refunds needs to be done.
   Failed transaction can either be stored onto the database or even ets tables.
+
+3. Convert exchange rates to euros.
