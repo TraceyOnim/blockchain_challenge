@@ -18,10 +18,6 @@ defimpl TransChain, for: Ethereum do
   end
 end
 
-# defimpl TransChain, for: Ethereum do
-#   def transaction(params), do: Ethereum.get_transaction(params)
-# end
-
 # defimpl TransChain, for: Bitcoin do
 #   def send_transaction(params), do: Bitcoin.send_transaction()
 # end

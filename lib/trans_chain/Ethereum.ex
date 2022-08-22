@@ -12,6 +12,7 @@ defmodule TransChain.Ethereum do
 
   defstruct ~w(params method)a
 
+  @spec send_transaction(Ethereum.t()) :: :ok
   def send_transaction(%__MODULE__{params: params, method: method}) do
     params
     |> @http_client.post!(method)
@@ -22,6 +23,7 @@ defmodule TransChain.Ethereum do
     Logger.error("missing param or method")
   end
 
+  @spec send_transaction(Ethereum.t()) :: :ok
   def get_transaction(%__MODULE__{params: params, method: method}) do
     params
     |> @http_client.post!(method)
